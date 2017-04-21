@@ -1,0 +1,90 @@
+[
+  {
+    "id": "VOTES_READER",
+    "type": "csvReader",
+    "inputs": {
+      "sourceFile": "C:\\Users\\Adnene\\Desktop\\WORKING_REPO\\FranceDetailedNew8.csv"
+    },
+    "configuration": {
+      "hasHeader": true,
+      "arrayHeader": [
+        "PROCEDURE_SUBJECT"
+      ],
+      "numberHeader": [
+        "VOTE_DATE",
+        "AGE"
+      ]
+    },
+    "outputs": {
+      "dataset": {
+        
+      }
+    }
+  },
+  {
+    "id": "GENERAL_FILTER",
+    "type": "filter",
+    "inputs": {
+      "dataset": "VOTES_READER.outputs.dataset"
+    },
+    "configuration": {
+      "pipeline": [
+        {
+          "dimensionName": "COUNTRY",
+          "equal": "France"
+        },
+        {
+          "dimensionName": "NATIONAL_PARTY",
+          "inSet": [
+            "Front national",
+            "Parti socialiste"
+          ]
+        }
+      ]
+    },
+    "outputs": {
+      "dataset": {
+        
+      }
+    }
+  },
+  {
+    "id": "GENERAL_MEPS_COUNTER",
+    "type": "aggregator",
+    "inputs": {
+      "dataset": "GENERAL_FILTER.outputs.dataset"
+    },
+    "configuration": {
+      "dimensions": {
+        "NATIONAL_PARTY": "NATIONAL_PARTY"
+      },
+      "measures": {
+        "MEPS_COUNT": {
+          "count_distinct": "EP_ID"
+        }
+      }
+    },
+    "outputs": {
+      "dataset": {
+        
+      },
+      "header": {
+        
+      }
+    }
+  },
+  {
+    "id": "QUALITIES_CSV_WRITER",
+    "type": "csvWriter",
+    "inputs": {
+      "dataset": "GENERAL_MEPS_COUNTER.outputs.dataset",
+      "destinationFile": "output.csv"
+    },
+    "configuration": {
+      "hasHeader": true
+    },
+    "outputs": {
+      
+    }
+  }
+]
