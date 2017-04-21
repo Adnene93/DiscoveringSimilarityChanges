@@ -129,6 +129,7 @@ def generateHeatMap(dataset,destination,color='RdYlGn',vmin=None,vmax=None,organ
     if showvalues_text :
         show_values(heatmap)
     fig = plt.gcf()
+    
     if not only_heatmap:
         fig.subplots_adjust(bottom=0.2,top=0.87,right=1.)
     fig.set_size_inches(40, 40) #40, 40
@@ -143,15 +144,17 @@ def generateHeatMap(dataset,destination,color='RdYlGn',vmin=None,vmax=None,organ
     xlabels= header_new#header[:]
     ylabels=rower_new#rower
     
-    ax.set_xticklabels(xlabels, minor=False,fontsize=80)
-    ax.set_yticklabels(ylabels, minor=False,fontsize=80)
+    ax.set_xticklabels(xlabels, minor=False,fontsize=35)
+    ax.set_yticklabels(ylabels, minor=False,fontsize=35)
 
     plt.xticks(rotation=90)
     plt.yticks(rotation=0)
     ax.grid(False)
 
     ax = plt.gca()
-    fig.tight_layout()
+    
+    
+    
     #ax.set_position((.1, .3, .8, .6))
     if not only_heatmap:
         plt.figtext(0.12, .1,'Details about :\n * the pattern \n * dossiers \n * compared MEPs',fontsize=40)
@@ -165,7 +168,7 @@ def generateHeatMap(dataset,destination,color='RdYlGn',vmin=None,vmax=None,organ
         t.tick2On = False
     if not only_heatmap:
         plt.colorbar(heatmap)
-    
+    #fig.tight_layout()
     plt.savefig(destination,dpi=100)
     fig.clf()
     plt.clf()

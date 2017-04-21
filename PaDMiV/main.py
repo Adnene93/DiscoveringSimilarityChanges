@@ -357,7 +357,7 @@ if __name__ == '__main__':
             'type':'heatmap_visualization',
             'inputs':{
                 'dataset':'PATTERN_ENUMERATOR.outputs.pairwiseStatistics[0]',
-                'destinationFile':"PARAMETERS.outputs.repository+'\\HEATMAPREF_'+str(PATTERN_ENUMERATOR.outputs.yielded_index)+'.jpg'"#"PARAMETERS.outputs.repository+'\\Subgroup_Heatmap\\HEATMAPREF_'+str(PATTERN_ENUMERATOR.outputs.yielded_index)+'.jpg'"
+                'destinationFile':"PARAMETERS.outputs.repository+'\\Figures\\Ref_'+str(PATTERN_ENUMERATOR.outputs.yielded_index)+'.jpg'"#"PARAMETERS.outputs.repository+'\\Subgroup_Heatmap\\HEATMAPREF_'+str(PATTERN_ENUMERATOR.outputs.yielded_index)+'.jpg'"
             },
             'configuration':{
                 'vmin':0.0,
@@ -376,7 +376,7 @@ if __name__ == '__main__':
             'type':'heatmap_visualization',
             'inputs':{
                 'dataset':'PATTERN_ENUMERATOR.outputs.pairwiseStatistics[1]',
-                'destinationFile':"PARAMETERS.outputs.repository+'\\HEATMAPPATTERN_'+str(PATTERN_ENUMERATOR.outputs.yielded_index)+'.jpg'"#"PARAMETERS.outputs.repository+'\\Subgroup_Heatmap\\HEATMAPPATTERN_'+str(PATTERN_ENUMERATOR.outputs.yielded_index)+'.jpg'"
+                'destinationFile':"PARAMETERS.outputs.repository+'\\Figures\\Pattern_'+str(PATTERN_ENUMERATOR.outputs.yielded_index)+'.jpg'"#"PARAMETERS.outputs.repository+'\\Subgroup_Heatmap\\HEATMAPPATTERN_'+str(PATTERN_ENUMERATOR.outputs.yielded_index)+'.jpg'"
             },
             'configuration':{
                 'vmin':0.0,
@@ -455,7 +455,10 @@ if __name__ == '__main__':
             
     }
     
-    
+    figure_directory=source_destination+'\\Figures'
+    if not os.path.exists(figure_directory):
+        os.makedirs(figure_directory)
     
     process_workflow_recursive(workflowFinal2, verbose=False)
+    
     
