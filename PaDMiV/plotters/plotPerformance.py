@@ -35,7 +35,7 @@ FIGSIZE=(12, 5.3)
 BAR_LOG_SCALE=False
 TIME_LOG_SCALE=False
 LEGEND=True
-
+SHOWPLOT=True
 optNames={(True,True,1):"DSC+UB1",(True,True,2):"DSC+UB2",(True,False):"CLOSED",(False,True,1):"UB1",(False,True,2):"UB2",(False,False):"BASELINE"}
 optNamesReversed={v:k for k,v in optNames.iteritems()}
 colorByOpt =  {"DSC+UB1":"green","DSC+UB2":"cyan", "CLOSED" : "blue", "UB1":"red","UB2":"magenta", "BASELINE":"orange"}
@@ -112,7 +112,7 @@ def PlotPerf(testResultFile, var_column, activated = list(optNames.values()), pl
         offset+=barWidth
     fig.tight_layout()
     plt.savefig(exportPath)
-    #plt.show()
+    if SHOWPLOT : plt.show()
 
 if __name__ == "__main__" :
     PlotPerf(sys.argv[1],sys.argv[2],plot_bars=sys.argv[3]=="True",plot_time=sys.argv[4]=="True",activated=sys.argv[5:])

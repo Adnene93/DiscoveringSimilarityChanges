@@ -26,7 +26,7 @@ def show_values(pc, fmt="%d", **kw):
             color = (0.0, 0.0, 0.0)
         else:
             color = (1.0, 1.0, 1.0)
-        ax.text(x, y, fmt % (value*100)+ ' %', ha="center", va="center", color=color,fontsize=60, fontweight='bold', **kw)
+        ax.text(x, y, fmt % (value*100)+ ' %', ha="center", va="center", color=color,fontsize=5, fontweight='bold', **kw)
         
 def generateHeatMap(dataset,destination,color='RdYlGn',vmin=None,vmax=None,organize=False,title=None,showvalues_text=True,only_heatmap=True):
     '''
@@ -146,8 +146,8 @@ def generateHeatMap(dataset,destination,color='RdYlGn',vmin=None,vmax=None,organ
     ax.set_xticklabels(xlabels, minor=False,fontsize=80)
     ax.set_yticklabels(ylabels, minor=False,fontsize=80)
 
-    plt.xticks(rotation=0)
-    plt.yticks(rotation=90)
+    plt.xticks(rotation=90)
+    plt.yticks(rotation=0)
     ax.grid(False)
 
     ax = plt.gca()

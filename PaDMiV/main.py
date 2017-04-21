@@ -35,7 +35,7 @@ if __name__ == '__main__':
     data = readJSON_stringifyUnicodes(source_configuration_test)
     source_destination=os.getcwd()
     
-    dataset_file=data['dataset_file']
+    dataset_file=source_destination+"\\"+data['dataset_file']
     dataset_arrayHeader=data['dataset_arrayHeader']
     dataset_numberHeader=data['dataset_numberHeader']
     votes_attributes=data['items_attributes']
@@ -82,7 +82,7 @@ if __name__ == '__main__':
                     'nb_dossiers_threshold':1,
                     
                     
-                    'cover_threshold':0.5,
+                    'cover_threshold':2,
                     
                     'top_k':top_k,#5,
                     'quality_threshold':sigma_quality,#0,

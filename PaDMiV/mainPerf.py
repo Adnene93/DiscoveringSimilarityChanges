@@ -26,7 +26,7 @@ if __name__ == '__main__':
     #source_configuration_test='C:\\Users\\Adnene\\Desktop\\XP_PKDD\\parliament\\All\\dummy\\question_1\\nb_items.json'
     print source_configuration_test
     data = readJSON_stringifyUnicodes(source_configuration_test)
-    dataset_file=data['dataset_file']
+    dataset_file=os.getcwd()+"\\"+data['dataset_file']
     dataset_arrayHeader=data['dataset_arrayHeader']
     dataset_numberHeader=data['dataset_numberHeader']
     votes_attributes=data['items_attributes']
