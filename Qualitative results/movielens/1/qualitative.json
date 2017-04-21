@@ -1,0 +1,26 @@
+{
+        "heatmaps":true,
+        "dataset_file":"movielens_dataset.csv",
+        "dataset_arrayHeader":["genres"],
+        "dataset_numberHeader":["releaseDate","age","Rating"],
+
+        "items_attributes":["movieID","movieTitle","releaseDate","genres","IMDBURL"],
+        "users_attributes":["userid","age","ageGroup","gender","occupation"],
+        "outcome_attributes":"Rating",
+        
+        "attr_items":[["genres","themes"],["releaseDate","numeric"]],
+        "attr_users":[],
+        "attr_aggregates":["ageGroup"],
+        "sigma_user":1,
+        "sigma_agg":1,
+        "sigma_item":3,
+        "sigma_quality":0,
+        "top_k":10,
+        "similarity_measures":"AVG_RANKING_SIMPLE",
+        "quality_measures":"DISAGR_SUMDIFF",
+        "upperbound":2,
+        "user_1_scope":[
+        ],
+        "user_2_scope":[
+        ]
+}
