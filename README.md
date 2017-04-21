@@ -1,2 +1,2 @@
 # DiscoveringSimilarityChanges
-This repository depict the materials concerning the paper : Flash point : Discovering exceptional pairwise behaviors in votes or ratings data
+This repository depict the materials concerning the paper : Flash point : Discovering exceptional pairwise behaviors in votes or ratings data, In here we will ...
