@@ -1,0 +1,25 @@
+{
+        "dataset_file":"C:\\Users\\Adnene\\Desktop\\DATASETS\\movielens_dataset.csv",
+        "dataset_arrayHeader":["genres"],
+        "dataset_numberHeader":["releaseDate","age","Rating"],
+
+        "items_attributes":["movieID","releaseDate","genres"],
+        "users_attributes":["userid","age","ageGroup","gender","occupation"],
+        "outcome_attributes":"Rating",
+
+        "attr_items_range":[[["genres","themes"]]],
+        "attr_users_range":[[["ageGroup","simple"]]],
+        "attr_aggregates_range":[["ageGroup"]],
+        "nb_items_range":[1000],
+        "nb_users_range":[2000],
+        "sigma_user_range":[5],
+        "sigma_agg_range":[1],
+        "sigma_item_range":[5,10,15,20,50],
+        "sigma_quality_range":[0],
+        "top_k_range":[5],
+        "prunning_range":[true],
+        "closed_range":[true],
+        "similarity_measures":["AVG_RANKING_SIMPLE"],
+        "quality_measures":["DISAGR_SUMDIFF"],
+        "upperbound":[2]
+}
