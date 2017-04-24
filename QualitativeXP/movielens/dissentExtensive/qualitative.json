@@ -1,5 +1,5 @@
 {
-        "heatmaps":true,
+        "heatmaps":false,
         "dataset_file":"C:\\Users\\Adnene\\Desktop\\DATASETS\\movielens_dataset.csv",
         "dataset_arrayHeader":["genres"],
         "dataset_numberHeader":["releaseDate","age","Rating"],
@@ -9,12 +9,12 @@
         "outcome_attributes":"Rating",
         
         "attr_items":[["genres","themes"],["releaseDate","numeric"]],
-        "attr_users":[],
-        "attr_aggregates":["ageGroup"],
-        "sigma_user":1,
+        "attr_users":[["ageGroup","simple"],["gender","simple"]],
+        "attr_aggregates":[],
+        "sigma_user":10,
         "sigma_agg":1,
         "sigma_item":3,
-        "sigma_quality":0,
+        "sigma_quality":0.3,
         "top_k":10,
         "similarity_measures":"AVG_RANKING_SIMPLE",
         "quality_measures":"DISAGR_SUMDIFF",

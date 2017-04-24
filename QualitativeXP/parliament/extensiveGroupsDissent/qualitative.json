@@ -1,5 +1,5 @@
 {
-        "heatmaps":true,
+        "heatmaps":false,
         "dataset_file":"C:\\Users\\Adnene\\Desktop\\XP_PKDD\\parliament\\All\\all8FULL.csv",
         "dataset_arrayHeader":["PROCEDURE_SUBJECT"],
         "dataset_numberHeader":["VOTE_DATE","AGE"],
@@ -8,27 +8,19 @@
         "users_attributes":["EP_ID","NAME_FULL","NATIONAL_PARTY","GROUPE_ID","COUNTRY","AGEGROUP","GENDER","AGE"],
         "outcome_attributes":"USER_VOTE",
 
-        "attr_items":[["PROCEDURE_SUBJECT","themes"],["VOTE_DATE","numeric"]],
-        "attr_users":[],
-        "attr_aggregates":["NATIONAL_PARTY"],
-        "sigma_user":3,
-        "sigma_agg":3,
-        "sigma_item":8,
+        "attr_items":[["PROCEDURE_SUBJECT","themes"],["VOTE_DATE","numeric"],["COMMITTEE","simple"]],
+        "attr_users":[["GROUPE_ID","simple"]],
+        "attr_aggregates":[],
+        "sigma_user":5,
+        "sigma_agg":5,
+        "sigma_item":15,
         "sigma_quality":0,
         "top_k":10,
         "similarity_measures":"MAAD",
         "quality_measures":"DISAGR_SUMDIFF",
         "upperbound":1,
         "user_1_scope":[
-                {
-                         "dimensionName":"COUNTRY",
-                         "inSet":["France"]
-                }
         ],
         "user_2_scope":[
-                {
-                         "dimensionName":"COUNTRY",
-                         "inSet":["France"]
-                }
         ]
 }

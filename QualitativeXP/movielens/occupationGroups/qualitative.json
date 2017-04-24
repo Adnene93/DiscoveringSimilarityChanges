@@ -10,9 +10,9 @@
         
         "attr_items":[["genres","themes"],["releaseDate","numeric"]],
         "attr_users":[],
-        "attr_aggregates":["ageGroup"],
+        "attr_aggregates":["occupation"],
         "sigma_user":1,
-        "sigma_agg":1,
+        "sigma_agg":10,
         "sigma_item":3,
         "sigma_quality":0,
         "top_k":10,

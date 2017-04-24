@@ -10,9 +10,9 @@
 
         "attr_items":[["PROCEDURE_SUBJECT","themes"],["VOTE_DATE","numeric"]],
         "attr_users":[],
-        "attr_aggregates":["NATIONAL_PARTY"],
-        "sigma_user":3,
-        "sigma_agg":3,
+        "attr_aggregates":["COUNTRY"],
+        "sigma_user":50,
+        "sigma_agg":50,
         "sigma_item":8,
         "sigma_quality":0,
         "top_k":10,
@@ -20,15 +20,7 @@
         "quality_measures":"DISAGR_SUMDIFF",
         "upperbound":1,
         "user_1_scope":[
-                {
-                         "dimensionName":"COUNTRY",
-                         "inSet":["France"]
-                }
         ],
         "user_2_scope":[
-                {
-                         "dimensionName":"COUNTRY",
-                         "inSet":["France"]
-                }
         ]
 }

@@ -22,13 +22,13 @@
         "user_1_scope":[
                 {
                          "dimensionName":"COUNTRY",
-                         "inSet":["France"]
+                         "inSet":["United Kingdom"]
                 }
         ],
         "user_2_scope":[
                 {
                          "dimensionName":"COUNTRY",
-                         "inSet":["France"]
+                         "inSet":["United Kingdom"]
                 }
         ]
 }

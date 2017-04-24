@@ -10,7 +10,7 @@
         
         "attr_items":[["genres","themes"],["releaseDate","numeric"]],
         "attr_users":[],
-        "attr_aggregates":["ageGroup"],
+        "attr_aggregates":["gender"],
         "sigma_user":1,
         "sigma_agg":1,
         "sigma_item":3,

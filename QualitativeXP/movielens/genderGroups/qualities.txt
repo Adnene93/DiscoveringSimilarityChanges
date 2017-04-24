@@ -1,0 +1,11 @@
+pattern_index	pattern	description	quality	upper_bound	dossiers_voted
+0	[['8'], [1963.0, 1966.0]]	[['Drama'], [1963.0, 1966.0]]	0.23509270155131232	0.23509270155131232	[('Two or Three Things I Know About Her (1966)', 1), ('8 1/2 (1963)', 1), ('Faster Pussycat! Kill! Kill! (1965)', 1)]
+1	[['4'], [1949.0, 1950.0]]	[['Children'], [1949.0, 1950.0]]	0.19031403250793738	0.19031403250793738	[('Cinderella (1950)', 1), ('So Dear to My Heart (1949)', 1), ('Kim (1950)', 1)]
+2	[['8'], [1949.0, 1950.0]]	[['Drama'], [1949.0, 1950.0]]	0.17524421670282742	0.17524421670282742	[('So Dear to My Heart (1949)', 1), ('Crows and Sparrows (1949)', 1), ('Forbidden Christ, The (Cristo proibito, Il) (1950)', 1), ('All About Eve (1950)', 1), ('Kim (1950)', 1)]
+3	[['4', '8'], [1949.0, 1957.0]]	[['Children', 'Drama'], [1949.0, 1957.0]]	0.17395453416314488	0.17395453416314488	[('So Dear to My Heart (1949)', 1), ('Old Yeller (1957)', 1), ('Kim (1950)', 1)]
+4	[['4', '8'], [1939.0, 1950.0]]	[['Children', 'Drama'], [1939.0, 1950.0]]	0.16909144916004515	0.24191088336949412	[('So Dear to My Heart (1949)', 1), ('Little Princess, The (1939)', 1), ('Wizard of Oz, The (1939)', 1), ('Kim (1950)', 1)]
+5	[['8'], [1962.0, 1966.0]]	[['Drama'], [1962.0, 1966.0]]	0.16294459000102685	0.2350927015513123	[('Mamma Roma (1962)', 1), ('Two or Three Things I Know About Her (1966)', 1), ('8 1/2 (1963)', 1), ('To Kill a Mockingbird (1962)', 1), ('Faster Pussycat! Kill! Kill! (1965)', 1)]
+6	[['4', '8'], [1939.0, 1949.0]]	[['Children', 'Drama'], [1939.0, 1949.0]]	0.13555904516430295	0.13555904516430295	[('So Dear to My Heart (1949)', 1), ('Little Princess, The (1939)', 1), ('Wizard of Oz, The (1939)', 1)]
+7	[['4'], [1949.0, 1951.0]]	[['Children'], [1949.0, 1951.0]]	0.1306348402054054	0.19031403250793738	[('Alice in Wonderland (1951)', 1), ('So Dear to My Heart (1949)', 1), ('Cinderella (1950)', 1), ('Kim (1950)', 1)]
+8	[['17', '8'], [1957.0, 1970.0]]	[['War', 'Drama'], [1957.0, 1970.0]]	0.13019278224045328	0.13019278224045328	[('Bridge on the River Kwai, The (1957)', 1), ('Paths of Glory (1957)', 1), ('Patton (1970)', 1)]
+9	[['4'], [1945.0, 1950.0]]	[['Children'], [1945.0, 1950.0]]	0.1276924118899932	0.19031403250793738	[('Cinderella (1950)', 1), ('So Dear to My Heart (1949)', 1), ('Three Caballeros, The (1945)', 1), ('Kim (1950)', 1)]
