@@ -23,7 +23,7 @@ The datasets directory contains the following files :
     + Download the movielens100K dataset from the following url : `https://grouplens.org/datasets/movielens/100k/`
     + put the script  **/transformMovielens.py** onto the downloaded directory and execute it
     + The scripts returns this file ***movielens_dataset.csv*** that is ready to use by our scripts
-+ **/EPD8.csv** : Contains the records of roll call votes during the 8th mandate (last update 17-10-2016). This file is a result of post processing json files downloaded from `parltrack.euwiki.org`
++ **/EPD8.csv** : Contains the records of roll call votes during the 8th mandate (last update 17-10-2016). This file is a result of post processing json files downloaded from `parltrack.euwiki.org`. This data is made available under Open Database License whose full text can be found at `http://opendatacommons.org/licenses/odbl/`. Any rights in individual contents of the database are licensed under the Database Contents License whose text can be found `http://opendatacommons.org/licenses/dbcl/`
 
 ### 3.  Tags of EPD  ###
 
