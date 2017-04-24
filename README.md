@@ -35,9 +35,10 @@ The qualitative XP contains a set of experiments and example of scripts that can
 
 ```
 {
-        "heatmaps":true,
+        
         "dataset_file":<dataset source path>,
-        "dataset_arrayHeader":["attr1","attr2",...], -- specify the columns having an array structure
+        "heatmaps": True or False, -- determne whether of not the scripts generate the corrsponding patterns heatmaps
+        "dataset_arrayHeader":["attr1","attr2",...], -- specify the columns having an array structure (usually HMT)
         "dataset_numberHeader":["attr3","attr4",...], specify the columns that are numeric
 
         "items_attributes":["attr1","attr2",...], -- specify the descriptions attribute of an item (e.g. Ballot)
@@ -53,11 +54,50 @@ The qualitative XP contains a set of experiments and example of scripts that can
         "sigma_quality":<sigma_quality>, --specify the threshold over the quality measure
         "top_k":<top_k>, --a number that specify <k> for top-k 
         "similarity_measures":"MAAD" OR "AVG_RANKING_SIMPLE", -- the similariy measure used.
-        "quality_measures":"AGR_SUMDIFF" or "DISAGR_SUMDIFF", -- the quality measure used.
+        "quality_measures":"AGR_SUMDIFF" (consent)  or "DISAGR_SUMDIFF" (dissent), -- the quality measure used.
         "upperbound":1 or 2, --specify which upperbound to used over similarities
-        "user_1_scope":[
-        ],
-        "user_2_scope":[
-        ]
+        "user_1_scope":[stageFilter1,stageFilter2...], --it's a sort of a pipeline that depict U1 the scope of users compared
+        "user_2_scope":[stageFilter1,stageFilter2...] --it's a sort of a pipeline that depict U2 the scope of users compared
 }
 ```
+
+In the directory **./QualitativeXP**. We have multiple example of such configuration that can be straightforwardly executed to generate qualitative results. Once a configuration file prepared it can be executed by the project as such 
+> python <project_directory>/main.py `config.json`
+
+
+### 5. Performance XP ###
+
+The qualitative XP contains a set of experiments and example of scripts that can be used to reproduce qualitative results. First we detail the structure of a *configuration file* that is given as a parameter to the project to run the qualitative results.
+
+```
+{
+        "dataset_file":<dataset source path>,
+        "dataset_arrayHeader":["attr1","attr2",...], -- specify the columns having an array structure (usually HMT)
+        "dataset_numberHeader":["attr3","attr4",...], specify the columns that are numeric
+
+        "items_attributes":["attr1","attr2",...], -- specify the descriptions attribute of an item (e.g. Ballot)
+        "users_attributes":["attr3","attr4",...], -- specify the descriptions attribute of a user (e.g. reviewer)
+        "outcome_attributes":"attr_outcome", -- specify the column depicting the outcome of a user on an item
+
+        "attr_items_range":[[["attr1","type1"],["attr2","type2"]], ...], -- specify the attributes used when enumerating contexts. Unlike in qualitative results, here a range is specified that precise that we want to run multiple tests with multiple descriptions attributes 
+        "attr_users_range":[[["attr1","type1"],["attr2","type2"]], ...], -- specify the attributes used when enumerating users. Unlike in qualitative results, here a range is specified that precise that we want to run multiple tests with multiple descriptions attributes
+        "attr_aggregates_range":[["attr1","attr2"],...], -- specify the range of grouping attributes.
+        "nb_items_range":[nb_items1,nb_items2 ...], -- specify the range of the number of items that we want to take into account in DSC.
+        "nb_users_range":[nb_users1,nb_users2 ...], -- specify the range of the number of users that we want to take into account in DSC
+        "sigma_user_range":[thres1,thres2], -- specify the range of thresholds over the users support size
+        "sigma_agg_range":[thres1,thres2], -- specify the range of thresholds over the users aggregates (groups) size
+        "sigma_item_range":[thres1,thres2], -- specify the range of thresholds over the items support size
+        "sigma_quality_range":[thres1,thres2], -- specify the range of thresholds over the quality measure
+        "top_k_range":[5], -- specify the range of thresholds over the quality measure
+        "prunning_range":[true (branch and bound),false (no prunning)], -- specify the range of whether or not we want to activate prunning when exploring the search space 
+        "closed_range":[true (use closure operator),false (don't use)], -- specify the range of whether or not we want to use the closure operator when exploring the search space
+        "similarity_measures":["MAAD","AVG_RANKING_SIMPLE"], -- the similariy measures tested.
+        "quality_measures":["DISAGR_SUMDIFF","AGR_SUMDIFF"], -- the quality measures tested.
+        "upperbound":[1,2], -- the upperbounds tested tested.
+}
+```
+
+In the directory **./PerformanceXP**. We have multiple example of such configuration that can be straightforwardly executed to generate performance experiments. Once a configuration file prepared it can be executed by the project as such 
+> python <project_directory>/mainPerf.py `config.json`
+
+
