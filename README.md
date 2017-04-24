@@ -25,3 +25,8 @@ The datasets directory contains the following files :
     + The scripts returns this file ***movielens_dataset.csv*** that is ready to use by our scripts
 + **/EPD8.csv** : Contains the records of roll call votes during the 8th mandate (last update 17-10-2016). This file is a result of post processing json files downloaded from `parltrack.euwiki.org`
 
+### 3.  Tags of EPD  ###
+
+The excel file provides details of all the tags by which a ballot can be tagged. This file provide a mapping of tags hierarchical ID with their corresponding labels.
+
+
