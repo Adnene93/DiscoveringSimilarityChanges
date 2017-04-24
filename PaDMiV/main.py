@@ -3,8 +3,8 @@ Created on 11 nov. 2016
 
 @author: Adnene
 '''
-
-
+from setuptools import setup, find_packages
+find_packages()
 import argparse
 import cProfile
 import json
@@ -12,6 +12,7 @@ import os
 from pprint import pprint
 import pstats
 import sys
+
 
 from EMM_ENUMERATOR.enumerator_themes2 import evaluate_themes_2
 from util.jsonProcessing import readJSON, writeJSON, readJSON_stringifyUnicodes
@@ -34,8 +35,8 @@ if __name__ == '__main__':
     print source_configuration_test
     data = readJSON_stringifyUnicodes(source_configuration_test)
     source_destination=os.getcwd()
-    
-    dataset_file=source_destination+"\\"+data['dataset_file']
+    #dataset_file=source_destination+"\\"+data['dataset_file']
+    dataset_file=data['dataset_file']
     dataset_arrayHeader=data['dataset_arrayHeader']
     dataset_numberHeader=data['dataset_numberHeader']
     votes_attributes=data['items_attributes']
