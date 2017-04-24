@@ -29,4 +29,35 @@ The datasets directory contains the following files :
 
 The excel file provides details of all the tags by which a ballot can be tagged. This file provide a mapping of tags hierarchical ID with their corresponding labels.
 
+### 4. Qualitative XP ###
 
+The qualitative XP contains a set of experiments and example of scripts that can be used to reproduce qualitative results. First we detail the structure of a *configuration file* that is given as a parameter to the project to run the qualitative results.
+
+```
+{
+        "heatmaps":true,
+        "dataset_file":<dataset source path>,
+        "dataset_arrayHeader":["attr1","attr2",...], -- specify the columns having an array structure
+        "dataset_numberHeader":["attr3","attr4",...], specify the columns that are numeric
+
+        "items_attributes":["attr1","attr2",...], -- specify the descriptions attribute of an item (e.g. Ballot)
+        "users_attributes":["attr3","attr4",...], -- specify the descriptions attribute of a user (e.g. reviewer)
+        "outcome_attributes":"attr_outcome", -- specify the column depicting the outcome of a user on an item
+        
+        "attr_items":[["attr1","type1"],["attr2","type2"]], -- specify the attributes used when enumerating contexts 
+        "attr_users":[["attr1","type1"],["attr2","type2"]], -- specify the attributes used when enumerating users  
+        "attr_aggregates":["attr1","attr2"], -- specify the grouping attributes
+        "sigma_user":<sigma_user>, --specify the threshold on the size of a users subgroup
+        "sigma_agg":<sigma_agg>, --specify the threshold on the size ofa group of users
+        "sigma_item":<sigma_item>,--specify the threshold on the size of an item subgroup
+        "sigma_quality":<sigma_quality>, --specify the threshold over the quality measure
+        "top_k":<top_k>, --a number that specify <k> for top-k 
+        "similarity_measures":"MAAD" OR "AVG_RANKING_SIMPLE", -- the similariy measure used.
+        "quality_measures":"AGR_SUMDIFF" or "DISAGR_SUMDIFF", -- the quality measure used.
+        "upperbound":1 or 2, --specify which upperbound to used over similarities
+        "user_1_scope":[
+        ],
+        "user_2_scope":[
+        ]
+}
+```
