@@ -9,6 +9,8 @@ This repository depict the materials concerning the paper : Flash point : Discov
 Below the method overview:
 ![](figures/methodExplanation.png)
 
+Not that each individual gives opinion (ratings, votes ...) over items. The groups of individuals can be composed over any users description attributes. One the groups of individuals composed, an aggregate outcome is mandatory to capture the opinion of a group. For example if we are dealing with a review dataset where people share their opinion over bought items. Let's assume that two of the three red individuals have an opinion gave respectively 3 and 5 on a scale of 5 to a bought car. Then the outcome of the red group can be assimilated to an average of 4 for the same car. These outcomes can be used to compare the opinion between individuals by defining a similarity between them over a subset of items. Finally these similarities help to objectively measure the pairwise behavior change between recomposed groups (after selecting individuals based on a set of constraint (gender, degree ...)) or even colors. 
+
 ## 1.  PaDMiV ##
 
 Contains the method (DSC - Discovering Similarities Changes) method scripts and other scripts usefuls to print figures, filtering files ... It contains mainly the two scripts : 
