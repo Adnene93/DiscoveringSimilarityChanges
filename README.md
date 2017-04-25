@@ -6,7 +6,8 @@ This repository depict the materials concerning the paper : Flash point : Discov
 4. **Qualitative XP** : a set of qualitative experiments and examples of scripts that can be used to reproduce the qualitative experiments results
 5. **Performance XP** : a set of performance experiments and examples of scripts that can be used to reproduce the  performance experiments results
 
-
+Below the method overview:
+![](figures/methodExplanation.png)
 
 ## 1.  PaDMiV ##
 
