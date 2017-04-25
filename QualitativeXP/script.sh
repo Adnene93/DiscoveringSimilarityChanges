@@ -1,0 +1,1 @@
+python ..\\PaDMiV\\main.py qualitativeMovielensExample.json 
