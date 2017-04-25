@@ -13,6 +13,7 @@ Contains the method (DSC - Discovering Similarities Changes) method scripts and 
 **./main.py** : used to generate qualitative results
 **./mainPerf.py** : used to generate performance experiments
 
+Before being able to use the project, please install Anaconda 4.3.1 for python 2.7 which can be found in the following url : **https://www.continuum.io/DOWNLOADS** and run the project using the conda python interpreter. 
 
 
 ## 2.  Datasets ##
