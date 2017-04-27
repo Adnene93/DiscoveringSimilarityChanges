@@ -8,7 +8,7 @@
         "users_attributes":["EP_ID","NAME_FULL","NATIONAL_PARTY","GROUPE_ID","COUNTRY","AGEGROUP","GENDER","AGE"],
         "outcome_attributes":"USER_VOTE",
 
-        "attr_items":[["PROCEDURE_SUBJECT","themes"],["VOTE_DATE","numeric"]],
+        "attr_items":[["PROCEDURE_SUBJECT","themes"]],
         "attr_users":[],
         "attr_aggregates":["NATIONAL_PARTY"],
         "sigma_user":3,

@@ -1,0 +1,1 @@
+python C:\\Users\\Adnene\\workspace\\PaDMiV\\main.py qualitative.json
