@@ -126,3 +126,4 @@ Below we show the top 10 flash points (the contexts on where an important pairwi
 
 
 ![Left - Heatmap corresponding to the reference model (usual pairwise behavior), Right - Heatmap corresponding to Pattern 0](figures/PatternRef0.png)
+In the figure above, the left heatmap corresponds to the reference model (usual pairwise behavior) while the right heatmap corresponds to Pattern 0
