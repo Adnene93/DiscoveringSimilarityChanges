@@ -3,8 +3,6 @@ Created on 11 nov. 2016
 
 @author: Adnene
 '''
-
-
 import argparse
 import cProfile
 import json
@@ -12,10 +10,20 @@ import os
 from pprint import pprint
 import pstats
 import sys
+from time import time
+
+from setuptools import setup, find_packages
 
 from EMM_ENUMERATOR.enumerator_themes2 import evaluate_themes_2
+from ENUMERATORS_ATTRIBUTES.enumerator_attribute_complex import enumerator_complex_cbo_init_new_config
+from util.csvProcessing import readCSVwithHeader
 from util.jsonProcessing import readJSON, writeJSON, readJSON_stringifyUnicodes
 from workflows.workflowsProcessing import process_workflow_recursive
+
+
+find_packages()
+
+
 
 
 sys.setrecursionlimit(sys.maxint)
@@ -27,14 +35,15 @@ if __name__ == '__main__':
     #print evaluate_themes_2(['1', '1.10', '1.20', '1.30', '2.30', '4.20', '4.30', '4.40.01', '4.40.02', '4.40.03', '5.10', '5.20', '5.30.01', '5.30.02', '6.10', '6.20', '7.10', '7.20','7.30.01','7.30.02','7.30.03','8'],7)
     
     repository='C:\\Users\\Adnene\\Desktop\\ExperimentsDB'    
-    
+        
     update_skip_list='list(pattern)' #sourceArr+
     
     source_configuration_test=sys.argv[1]
+    #source_configuration_test='C:\Users\Adnene\Desktop\DiscoveringSimilarityChanges\QualitativeXP\parliament\Germany\qualitative.json'
     print source_configuration_test
     data = readJSON_stringifyUnicodes(source_configuration_test)
     source_destination=os.getcwd()
-    
+    #dataset_file=source_destination+"\\"+data['dataset_file']
     dataset_file=data['dataset_file']
     dataset_arrayHeader=data['dataset_arrayHeader']
     dataset_numberHeader=data['dataset_numberHeader']
@@ -82,7 +91,7 @@ if __name__ == '__main__':
                     'nb_dossiers_threshold':1,
                     
                     
-                    'cover_threshold':0.5,
+                    'cover_threshold':2,
                     
                     'top_k':top_k,#5,
                     'quality_threshold':sigma_quality,#0,
@@ -152,7 +161,6 @@ if __name__ == '__main__':
                 'dataset':{}
             } 
         },
-        
         {
             'id':'GENERAL_FILTER',
             'type':'filter',
@@ -189,6 +197,7 @@ if __name__ == '__main__':
                 'users_majorities_attributes':'PARAMETERS.outputs.aggregation_attributes', 
                 'position_attribute':'PARAMETERS.outputs.position_attribute',
                 'nb_aggregation_min':'PARAMETERS.outputs.nb_aggregation_min',
+                #'vector_of_outcome':['Voix','Votants']
             },
             'outputs':{
                 'dataset':[]
@@ -357,7 +366,7 @@ if __name__ == '__main__':
             'type':'heatmap_visualization',
             'inputs':{
                 'dataset':'PATTERN_ENUMERATOR.outputs.pairwiseStatistics[0]',
-                'destinationFile':"PARAMETERS.outputs.repository+'\\HEATMAPREF_'+str(PATTERN_ENUMERATOR.outputs.yielded_index)+'.jpg'"#"PARAMETERS.outputs.repository+'\\Subgroup_Heatmap\\HEATMAPREF_'+str(PATTERN_ENUMERATOR.outputs.yielded_index)+'.jpg'"
+                'destinationFile':"PARAMETERS.outputs.repository+'\\Figures\\Ref_'+str(PATTERN_ENUMERATOR.outputs.yielded_index)+'.jpg'"#"PARAMETERS.outputs.repository+'\\Subgroup_Heatmap\\HEATMAPREF_'+str(PATTERN_ENUMERATOR.outputs.yielded_index)+'.jpg'"
             },
             'configuration':{
                 'vmin':0.0,
@@ -376,7 +385,7 @@ if __name__ == '__main__':
             'type':'heatmap_visualization',
             'inputs':{
                 'dataset':'PATTERN_ENUMERATOR.outputs.pairwiseStatistics[1]',
-                'destinationFile':"PARAMETERS.outputs.repository+'\\HEATMAPPATTERN_'+str(PATTERN_ENUMERATOR.outputs.yielded_index)+'.jpg'"#"PARAMETERS.outputs.repository+'\\Subgroup_Heatmap\\HEATMAPPATTERN_'+str(PATTERN_ENUMERATOR.outputs.yielded_index)+'.jpg'"
+                'destinationFile':"PARAMETERS.outputs.repository+'\\Figures\\Pattern_'+str(PATTERN_ENUMERATOR.outputs.yielded_index)+'.jpg'"#"PARAMETERS.outputs.repository+'\\Subgroup_Heatmap\\HEATMAPPATTERN_'+str(PATTERN_ENUMERATOR.outputs.yielded_index)+'.jpg'"
             },
             'configuration':{
                 'vmin':0.0,
@@ -455,7 +464,19 @@ if __name__ == '__main__':
             
     }
     
-    
-    
+    figure_directory=source_destination+'\\Figures'
+    if not os.path.exists(figure_directory):
+        os.makedirs(figure_directory)
+#     pr = cProfile.Profile()
+#     pr.enable()
     process_workflow_recursive(workflowFinal2, verbose=False)
+#     pr.disable()
+#     ps = pstats.Stats(pr)
+#     ps.sort_stats('time').print_stats(100) #cumulativ
+
+
+
+
+
+    #################################################
     

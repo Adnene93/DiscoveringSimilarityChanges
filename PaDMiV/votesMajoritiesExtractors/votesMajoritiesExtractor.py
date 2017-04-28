@@ -6,7 +6,7 @@ Created on 20 janv. 2017
 from math import sqrt
 
 
-def compute_majorities_in_votes_dataset_multi_layers(dataset,votesAttributes,usersAttributes,usersAggregationAttributes,position_attribute,nb_aggregation_min=0):
+def compute_majorities_in_votes_dataset_multi_layers(dataset,votesAttributes,usersAttributes,usersAggregationAttributes,position_attribute,nb_aggregation_min=0,vector_of_outcome=None): #[vector_of_outcome=['attr1,'attr2]]
     #mapping_user_vote={'for':'Y','against':'N','abstain':'A'}
     distinct_actions=set()
     vote_identifier=str(votesAttributes[0])
@@ -81,12 +81,23 @@ def compute_majorities_in_votes_dataset_multi_layers(dataset,votesAttributes,use
     print 'possible Outcomes are : ', vector_of_actions
     
     
+    
     for x in datasetToReturn:
+        #print x[position_attribute]
         x['MAJORITY']=x.get('MAJORITY',0)
         if not x['MAJORITY']:
-            x[position_attribute]={x[position_attribute]:1.}
+            
+            
+            if vector_of_outcome is None :
+                x[position_attribute]={x[position_attribute]:1.}
+            else :
+                vector_of_actions=vector_of_outcome
+                x[position_attribute]={f:x[f] for f in vector_of_actions}
+                
+            
             #x[position_attribute]={mapping_user_vote[k]:v for k,v in x[position_attribute].iteritems()}
             x[position_attribute]=tuple([float(x[position_attribute].get(pos,0.)) for pos in vector_of_actions])#+(0.,)
+            #print x[position_attribute]
             
             
         else :
@@ -202,8 +213,9 @@ def workflowStage_majorities_computer(
     users_majorities_attributes=configuration.get('users_majorities_attributes',[])
     position_attribute=configuration.get('position_attribute','')
     nb_aggregation_min=configuration.get('nb_aggregation_min',0)
+    vector_of_outcome=configuration.get('vector_of_outcome',None)
     #print users_majorities_attributes
-    returnedDataset,mepsmeta_majorities=compute_majorities_in_votes_dataset_multi_layers(dataset, votesAttributes, usersAttributes, users_majorities_attributes, position_attribute,nb_aggregation_min)
+    returnedDataset,mepsmeta_majorities=compute_majorities_in_votes_dataset_multi_layers(dataset, votesAttributes, usersAttributes, users_majorities_attributes, position_attribute,nb_aggregation_min,vector_of_outcome)
     
     outputs['dataset']=returnedDataset
     outputs['majorities']=mepsmeta_majorities

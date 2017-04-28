@@ -1795,8 +1795,10 @@ def dsc_uuc_method_HEATMAP(dataset,attributes,configuration,user1_scope,user2_sc
 
                 
             else :
-                if (u2_p_tuple_users in visited_1_trace and u1_p_tuple_users in visited_2_trace) or (u1_p_tuple_users in visited_1_trace and u2_p_tuple_users in visited_2_trace):
-                    continue
+                ###########################EERRROOOOOOOOOOOOOR ! #################################
+#                 if (u2_p_tuple_users in visited_1_trace and u1_p_tuple_users in visited_2_trace) or (u1_p_tuple_users in visited_1_trace and u2_p_tuple_users in visited_2_trace):
+#                     continue
+                ###########################EERRROOOOOOOOOOOOOR ! #################################
                 cur_visited = visited_aggregated_outcome[u2_p_tuple_users]
                 users2_aggregated_map_votes_pattern=cur_visited['map_to_votes']
                 users2_aggregated_to_votes_outcomes_pattern=cur_visited['votes_outcomes']
@@ -2188,8 +2190,10 @@ def dsc_uuc_method(dataset,attributes,configuration,user1_scope,user2_scope,vote
 
                 
             else :
-                if (u2_p_tuple_users in visited_1_trace and u1_p_tuple_users in visited_2_trace) or (u1_p_tuple_users in visited_1_trace and u2_p_tuple_users in visited_2_trace):
-                    continue
+                ###########################EERRROOOOOOOOOOOOOR ! #################################
+#                 if (u2_p_tuple_users in visited_1_trace and u1_p_tuple_users in visited_2_trace) or (u1_p_tuple_users in visited_1_trace and u2_p_tuple_users in visited_2_trace):
+#                     continue
+                ###########################EERRROOOOOOOOOOOOOR ! #################################
                 cur_visited = visited_aggregated_outcome[u2_p_tuple_users]
                 users2_aggregated_map_votes_pattern=cur_visited['map_to_votes']
                 users2_aggregated_to_votes_outcomes_pattern=cur_visited['votes_outcomes']

@@ -92,6 +92,9 @@ def get_starting_pattern_theme(tree):
 def value_to_yield_themes(tree,pattern,refinement_index,widthmax=0):
     return None if (refinement_index<len(pattern)-1) and pattern[refinement_index] in tree[pattern[refinement_index+1]]['all_parents']  else pattern
 
+
+
+
 def children_themes_flag(tree,pattern,refinement_index=None,widthmax=float('inf')):
     len_p=len(pattern)
     refin_index_is_not_last=refinement_index+1<len_p 
@@ -192,6 +195,7 @@ def respect_order_themes(p1,p2,refinement_index):
 
 
 def closure_continueFrom_themes(tree,pattern,closed,refinement_index): #what is the pattern which represent the one that we need to continue from after closing (it's none if the lexicographic order is not respected)
+    #print closed,pattern
     ref_in_closed=closed[refinement_index]
     ref_in_p=pattern[refinement_index]
     new_pattern=closed[:]
@@ -230,3 +234,40 @@ def closure_continueFrom_themes_new(tree,patternArray,closed,refinement_index): 
     
 def equality_themes(p1,p2):
     return p1==p2
+
+
+
+def index_correspondant_to_themes(attr,indexall):
+    attr_name=attr['name']
+    index_attr={key:set() for key in attr['domain'].keys()}
+    #print index_attr.keys()
+    
+    for i in range(len(indexall)):
+        for t in indexall[i][attr_name]:
+            index_attr[t]|={i}
+        #index_attr[indexall[i][attr_name]]|={i}
+#     for k in index_attr:
+#         print k, '    ', index_attr[k]
+#         raw_input('...')
+    attr['index_attr']=index_attr
+    
+
+def compute_full_support_themes(set_indices_prec,attr):
+    #print attr['pattern'],'aha'
+    index_attr=attr['index_attr']
+    pattern=attr['pattern']
+    refin=attr['refinement_index']
+    
+    return set_indices_prec&index_attr[pattern[refin]]#reduce(set.intersection,(index_attr[p] for p in pattern[refin:]))
+    
+    
+def similarity_between_descriptions(d1,d2):
+    d1_extended=reduce(set.union,(all_parents_tag(t1)-{''} for t1 in d1))
+    d2_extended=reduce(set.union,(all_parents_tag(t2)-{''} for t2 in d2))
+    return True if  len(d1_extended&d2_extended)>0 else False
+    #return True if  d1_extended<=d2_extended or set(d2)<=d1_extended else False
+
+
+    
+    
+    

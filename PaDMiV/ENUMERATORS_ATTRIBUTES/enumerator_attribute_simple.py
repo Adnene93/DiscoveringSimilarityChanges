@@ -80,4 +80,16 @@ def equality_simple(p1,p2):
         return True
     return False
     
+def index_correspondant_to_simple(attr,indexall):
+    attr_name=attr['name']
+    index_attr={key:set() for key in attr['domain']}
+    for i in range(len(indexall)):
+        index_attr[indexall[i][attr_name]]|={i}
         
+    attr['index_attr']=index_attr    
+    
+    
+def compute_full_support_simple(set_indices_prec,attr):
+    #print attr['pattern'],'aha'
+    
+    return set_indices_prec&reduce(set.union,[attr['index_attr'][p] for p in attr['pattern']]) 

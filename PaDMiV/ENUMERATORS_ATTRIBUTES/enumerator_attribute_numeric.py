@@ -82,3 +82,29 @@ def closure_continueFrom_numeric(domain,pattern,closed,refinement_index): #what 
 
 def equality_numeric(p1,p2):
     return p1==p2
+
+
+def index_correspondant_to_numeric(attr,indexall):
+    attr_name=attr['name']
+    index_attr={key:set() for key in attr['domain']}
+    for i in range(len(indexall)):
+        index_attr[indexall[i][attr_name]]|={i}
+        
+    attr['index_attr']=index_attr
+    
+def compute_full_support_numeric(set_indices_prec,attr):
+    #print attr['pattern'],'aha'
+    refin=attr['refinement_index']
+    #print refin
+    #print attr['pattern']
+    
+    #print attr['domain']
+    
+#     if refin==1:
+#         last_prec=attr['pattern'][-1]+1 if attr['pattern'][-1]<>9 else attr['pattern'][-1]+2
+#     else :
+#         last_prec=attr['pattern'][0]-1 if attr['pattern'][0]<>11 else attr['pattern'][0]-2
+#     #print last_prec,attr['pattern'][0],attr['pattern'][-1]
+#     return set_indices_prec - attr['index_attr'][last_prec]
+    
+    return set_indices_prec&reduce(set.union,[attr['index_attr'][p] for p in attr['pattern']])

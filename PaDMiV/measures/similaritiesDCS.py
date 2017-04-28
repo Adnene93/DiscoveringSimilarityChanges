@@ -759,11 +759,37 @@ def similarity_vector_ranking_averaging_majority_binary(votes_ids,user1_votes_ou
     return similarity,nbvotes
 
 
+
+def similarity_candidates(votes_ids,user1_votes_outcome,user2_votes_outcome,user1,user2):
+    
+    similarity=0.;nbvotes=0;#range2=range(len(2))
+    bigv1=(0,0)
+    bigv2=(0,0)
+    for key in votes_ids:
+        try:
+            v1=user1_votes_outcome[key]
+            v2=user2_votes_outcome[key]
+            nbvotes+=1
+            bigv1=(bigv1[0]+v1[0],bigv1[1]+v1[1])
+            bigv2=(bigv2[0]+v2[0],bigv2[1]+v2[1])
+        except:
+            continue
+    
+#     print '-------------------'
+#     print bigv1
+#     print bigv2
+#     
+#     print '-------------------'
+    similarity=(1-copysign((bigv1[0]/float(bigv1[1]))-(bigv2[0]/float(bigv2[1])),1)) * nbvotes
+    
+    return similarity,nbvotes
+
 SIMILARITIES_VECTORS_MAP={
     'AP':similarity_vector_AP,
     
     'MAAD':similarity_vector_MAAD,
     'MAAD_AI':similarity_vector_MAAD_AI,
+    'similarity_candidates':similarity_candidates,
 #     'MAAD_AIT':similarity_vector_MAAD_AIT,
 #     'MAADABS':similarity_vector_MAADABS,
 #     

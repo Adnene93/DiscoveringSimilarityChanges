@@ -20,19 +20,19 @@ from ENUMERATORS_ATTRIBUTES.enumerator_attribute_numeric import children_numeric
     get_starting_pattern_numeric, closure_continueFrom_numeric, \
     pattern_cover_object_numeric, closed_numeric, respect_order_numeric, \
     object_value_for_index_numeric, pattern_cover_object_numeric_index, \
-    closed_numeric_index, equality_numeric
+    closed_numeric_index, equality_numeric, index_correspondant_to_numeric, compute_full_support_numeric
 from ENUMERATORS_ATTRIBUTES.enumerator_attribute_simple import children_simple, \
     value_to_yield_simple, get_domain_from_dataset_simple, \
     get_starting_pattern_simple, closure_continueFrom_simple, \
     pattern_cover_object_simple, pattern_cover_object_simple_index, \
     closed_simple, closed_simple_index, respect_order_simple, \
-    object_value_for_index_simple, equality_simple
+    object_value_for_index_simple, equality_simple, index_correspondant_to_simple, compute_full_support_simple
 from ENUMERATORS_ATTRIBUTES.enumerator_attribute_themes import children_themes, \
     value_to_yield_themes, get_domain_from_dataset_theme, \
     get_starting_pattern_theme, closure_continueFrom_themes, \
     pattern_cover_object_themes, closed_themes, respect_order_themes, \
     object_value_for_index_themes, pattern_cover_object_themes_index, \
-    closed_themes_index, equality_themes, closure_continueFrom_themes_new
+    closed_themes_index, equality_themes, closure_continueFrom_themes_new, index_correspondant_to_themes, compute_full_support_themes
 
 
 
@@ -124,12 +124,26 @@ POSSIBLE_ENUMERATOR_EQUALITY={
     'themes':equality_themes    
 };
 
+POSSIBLE_INDEXES_PER_ATTRIBUTES={
+    'simple':index_correspondant_to_simple,
+    'numeric':index_correspondant_to_numeric,
+    'themes':index_correspondant_to_themes
+}
+
+POSSIBLE_FULL_SUPPORT_COMPUTING={
+    'simple':compute_full_support_simple,
+    'numeric':compute_full_support_numeric,
+    'themes':compute_full_support_themes,
+    
+    
+}
+
 
 def value_to_yield_complex(attributes,refinement_index):
     pattren_to_yield=[]
     pattren_to_yield_append=pattren_to_yield.append
     for i in range(len(attributes)):
-        attribute_to_refin=attributes[i]
+        attribute_to_refin_Yielded=attributes[i]['pattern_yielded']
 #         actual_attribute_type=attribute_to_refin['type']
 #         actual_attribute_domain=attribute_to_refin['domain']
 #         actual_attribute_refinement_index=attribute_to_refin['refinement_index']
@@ -137,9 +151,9 @@ def value_to_yield_complex(attributes,refinement_index):
 #         actual_attribute_pattern=attribute_to_refin['pattern']
 #         attribute_pattern_to_yield=POSSIBLE_ENUMERATOR_VALUE_TO_YIELD[actual_attribute_type](actual_attribute_domain,actual_attribute_pattern,actual_attribute_refinement_index,actual_attribute_widthmax)
 #         
-        if attribute_to_refin['pattern_yielded'] is None :
+        if attribute_to_refin_Yielded is None :
             return None
-        pattren_to_yield_append(attribute_to_refin['pattern_yielded'])
+        pattren_to_yield_append(attribute_to_refin_Yielded)
     return pattren_to_yield
 
 
@@ -194,6 +208,7 @@ def init_attributes_complex(dataset,attributes):
     for attr in attributes:
         old_width_max=attr.get('widthmax',None)
         attr['domain'],attr['labelmap']=POSSIBLE_ENUMERATOR_GET_DOMAIN_FROM_DATASET[attr['type']](attr['domain'])
+        
         attr['pattern'],attr['refinement_index'],attr['widthmax']=POSSIBLE_ENUMERATOR_GET_STARTING_PATTERN[attr['type']](attr['domain'])
         attr['pattern_yielded']=POSSIBLE_ENUMERATOR_VALUE_TO_YIELD[attr['type']](attr['domain'],attr['pattern'],attr['refinement_index'],attr['widthmax'])
         if old_width_max is not None:
@@ -213,6 +228,23 @@ def create_index_complex(dataset,attributes):
             domain=attr['domain']
             o_index[name]=POSSIBLE_ENUMERATOR_INDEX_OBJECT_VALUES[typeAttr](domain,o,name)
         index_append(o_index)
+    
+    for attr in attributes:
+        #if attr['type'] in {'numeric','themes'}: 
+            POSSIBLE_INDEXES_PER_ATTRIBUTES[attr['type']](attr,index)
+    ############################################################################"
+#     for attr in attributes:
+#         attr_name=attr['name']
+#         attr_type=attr['type']
+#         attr_domain=attr['domain']
+#         attr_refinement_index=attr['refinement_index']
+#         if attr_type=='numeric':
+#             indexe_attr={k:set() for k in attr_domain}
+#             for i in xrange(len(dataset)):
+#                 indexe_attr[dataset[i][attr_name]]|={i}
+#                 #attr_pattern=[dataset[i][attr_name],dataset[i][attr_name]]
+#                 #if POSSIBLE_ENUMERATOR_COVER_OBJECT[attr_type](attr_domain,attr_pattern,attr_refinement_index,dataset[i][attr_name],attr_name):
+#             print  indexe_attr   
     return index    
 
 
@@ -261,33 +293,67 @@ def compute_support_complex(attributes,dataset):
 def get_attr_infos(attributes):
     return [(attr['name'],POSSIBLE_ENUMERATOR_COVER_OBJECT_INDEX[attr['type']],set(attr['pattern'])) for attr in attributes]
 
-def compute_support_complex_index(attributes,dataset,datasetIndices,allIndexes,refinement_index,threshold=0):
+def compute_support_complex_index(attributes,dataset,datasetIndices,allIndexes,refinement_index,wholeDataset=[],threshold=0):
     support=[]
     support_append=support.append
     indices=[]
     indices_append=indices.append
-    
-    attr_infos=[(attr['name'],POSSIBLE_ENUMERATOR_COVER_OBJECT_INDEX[attr['type']],attr['pattern']) for attr in attributes[refinement_index:]]
+    #if len(attributes)>1: print attributes[1]['pattern']
     len_datasetIndices=len(datasetIndices)
     #v_ind=0
-    for v_ind in range(len_datasetIndices):
-        obj=dataset[v_ind]
-        ind_obj=datasetIndices[v_ind]
-        all_index_ind_obj=allIndexes[ind_obj]
-        is_obj_covered=True
-        for name,cover_fun_index,set_pattern in attr_infos:
-            is_obj_covered=cover_fun_index(set_pattern,all_index_ind_obj,name)
-            #POSSIBLE_ENUMERATOR_COVER_OBJECT_INDEX[attr_type](attr_domain,attr_pattern,attr_refinement_index,allIndexes[ind_obj],attr_name))
-            if not is_obj_covered:
-                len_datasetIndices-=1
-                if len_datasetIndices<threshold:
-                    return support,indices 
-                break
+    if False :
+        attr_infos=[(attr['name'],POSSIBLE_ENUMERATOR_COVER_OBJECT_INDEX[attr['type']],attr['pattern']) for attr in attributes[refinement_index:]]
         
-        if is_obj_covered:
-            support_append(obj)
-            indices_append(ind_obj)
+        for v_ind in range(len_datasetIndices):
+            obj=dataset[v_ind]
+            ind_obj=datasetIndices[v_ind]
+            all_index_ind_obj=allIndexes[ind_obj]
+            is_obj_covered=True
+            for name,cover_fun_index,set_pattern in attr_infos:
+                is_obj_covered=cover_fun_index(set_pattern,all_index_ind_obj,name)
+                #POSSIBLE_ENUMERATOR_COVER_OBJECT_INDEX[attr_type](attr_domain,attr_pattern,attr_refinement_index,allIndexes[ind_obj],attr_name))
+                if not is_obj_covered:
+                    len_datasetIndices-=1
+                    if len_datasetIndices<threshold:
+                        return support,indices 
+                    break
+            
+            if is_obj_covered:
+                support_append(obj)
+                indices_append(ind_obj)
         #v_ind+=1
+    
+    else :
+        
+        attr_ref=attributes[refinement_index]
+        indices=POSSIBLE_FULL_SUPPORT_COMPUTING[attr_ref['type']](datasetIndices,attr_ref)
+        if len(indices)<threshold:
+            return [],[]
+        support=[wholeDataset[inds] for inds in indices]
+        
+#         indices=datasetIndices#.copy()
+#         enum_attrs=(attr for attr in attributes[refinement_index:])
+#         attr_1=next(enum_attrs)
+#         indices=POSSIBLE_FULL_SUPPORT_COMPUTING[attr_1['type']](indices,attr_1)
+#         if len(indices)<threshold:
+#             return [],[]
+#         for attr in enum_attrs:
+#             attr_type=attr['type']
+#             indices&=POSSIBLE_FULL_SUPPORT_COMPUTING[attr_type](indices,attr)
+#             #print attr['pattern'], indices
+#             if len(indices)<threshold:
+#                 return [],[]
+#         support=[wholeDataset[inds] for inds in indices]
+        
+        
+        
+#         for v_ind in range(len_datasetIndices):
+#             if datasetIndices[v_ind] in indices:
+#                 indices_append(datasetIndices[v_ind])
+#                 support_append(dataset[v_ind])
+        #support = [dataset[ind] for ind in indices]
+    
+    
     return support,indices
 
 def compute_support_complex_index_for_cbo(attributes,dataset,datasetIndices,allIndexes,refinement_index):
@@ -446,9 +512,10 @@ def children_complex_flag_cbo(attributes,refinement_index):
     for actual_child,actual_refin in POSSIBLE_ENUMERATOR_CHILDREN[actual_attribute_type](actual_attribute_domain,actual_continue_from,actual_attribute_refinement_index,actual_attribute_widthmax):
         attributes_child=attributes[:]
         attributes_child[refinement_index]=attributes_child[refinement_index].copy()
-        attributes_child[refinement_index]['pattern']=actual_child
-        attributes_child[refinement_index]['pattern_yielded']=POSSIBLE_ENUMERATOR_VALUE_TO_YIELD[actual_attribute_type](actual_attribute_domain,actual_child,actual_refin,actual_attribute_widthmax)
-        attributes_child[refinement_index]['refinement_index']=actual_refin
+        attributes_child_refinement_index=attributes_child[refinement_index]
+        attributes_child_refinement_index['pattern']=actual_child
+        attributes_child_refinement_index['pattern_yielded']=POSSIBLE_ENUMERATOR_VALUE_TO_YIELD[actual_attribute_type](actual_attribute_domain,actual_child,actual_refin,actual_attribute_widthmax)
+        attributes_child_refinement_index['refinement_index']=actual_refin
         yield attributes_child
         
 def children_complex_cbo(attributes,refinement_index):
@@ -484,21 +551,27 @@ def enumerator_complex_cbo_init(dataset,attributes):
         yield pattern_to_yield,e_config['support']
 
 
-def enumerator_complex_cbo_new(attributes,refinement_index,config,threshold=0,verbose=False):
+def enumerator_complex_cbo_new(attributes,refinement_index,config,wholeDataset,threshold=0,verbose=False):
     yielded_pattern=value_to_yield_complex(attributes,refinement_index)
     config_new=config.copy()
 
     if yielded_pattern is not None: 
         config_new['nb_visited'][0]+=1
-        if verbose and config_new['nb_visited'][0]%100==0:
-            print config_new['nb_visited'][0],config_new['nb_visited'][1]
-        config_new['support'],config_new['indices']=compute_support_complex_index(attributes,config_new['support'],config_new['indices'],config_new['allindex'],refinement_index,threshold)
+        if verbose and config_new['nb_visited'][0]%1000==0:
+            print config_new['nb_visited'][0],config_new['nb_visited'][1],config_new['nb_visited'][2]
+        config_new['support'],config_new['indices']=compute_support_complex_index(attributes,config_new['support'],config_new['indices'],config_new['allindex'],refinement_index,wholeDataset,threshold)
         if len(config_new['support'])>=threshold:
+            if len(config_new['support'])==threshold:
+                config_new['flag']=False
             closed=closed_complex_index(attributes,config_new['support'],config_new['indices'],config_new['allindex'])
+            config_new['nb_visited'][1]+=1
             attributeClosed=pattern_over_attributes(attributes, closed)
+            #print value_to_yield_complex(attributes,refinement_index)
+            #print value_to_yield_complex(attributeClosed,refinement_index)
+            
             if respect_order_complex(attributes, attributeClosed, refinement_index):
                 continue_from=closure_continueFrom_complex(attributes, attributeClosed, refinement_index)
-                config_new['nb_visited'][1]+=1
+                config_new['nb_visited'][2]+=1
                 yield value_to_yield_complex(attributeClosed,refinement_index),attributeClosed,config_new
             else :
                 config_new['flag']=False
@@ -509,7 +582,7 @@ def enumerator_complex_cbo_new(attributes,refinement_index,config,threshold=0,ve
     
     if config_new['flag']:
         for child,refin_child in children_complex_cbo(continue_from,refinement_index):
-            for child_pattern_yielded,child_attribute,child_config in enumerator_complex_cbo_new(child,refin_child,config_new,threshold,verbose):
+            for child_pattern_yielded,child_attribute,child_config in enumerator_complex_cbo_new(child,refin_child,config_new,wholeDataset,threshold,verbose):
                 yield child_pattern_yielded,child_attribute,child_config
 
 
@@ -598,11 +671,11 @@ def enumerator_complex_from_dataset_new_config(dataset,attributes,config_init={}
     visited=set()
     count=0
     count2=0
-    config={'support':dataset,'flag':True,'indices':range(len(dataset)),'allindex':create_index_complex(dataset, attributes),'nb_visited':[0,0]}
+    config={'support':dataset,'flag':True,'indices':set(range(len(dataset))),'allindex':create_index_complex(dataset, attributes),'nb_visited':[0,0]}
     config.update(config_init)
     for pattern_to_yield,e_attributes,e_config in enumerator_complex_config_all(attributes,0,config):
         count+=1
-        e_config['support'],e_config['indices']=compute_support_complex_index(e_attributes,e_config['support'],e_config['indices'],e_config['allindex'],e_config['refinement'])
+        e_config['support'],e_config['indices']=compute_support_complex_index(e_attributes,e_config['support'],e_config['indices'],e_config['allindex'],e_config['refinement'],wholeDataset=dataset,threshold=threshold)
         if verbose and count%1000==0:
             print count,count2
         #e_config['support']=compute_support_complex(e_attributes, e_config['support'])
@@ -616,12 +689,12 @@ def enumerator_complex_from_dataset_new_config(dataset,attributes,config_init={}
 #                 continue
 #             else:
 #                 visited|={actual_id}
-#                 count2+=1
                 count2+=1
+                #count2+=1
                 e_config['nb_visited']=[count,count2]
                 yield pattern_to_yield,label_attributes(e_attributes),e_config
     if verbose :
-        print '------------',count,'--------------'
+        print '------------',count,count2,'--------------'
                 
 def enumerator_complex_cbo_init_new_config(dataset,attributes,config_init={},threshold=1,verbose=False,bfs=False):
 #     pr = cProfile.Profile()
@@ -629,12 +702,13 @@ def enumerator_complex_cbo_init_new_config(dataset,attributes,config_init={},thr
     timing=0
     st=time()
     attributes=init_attributes_complex(dataset,attributes)
-    config={'support':dataset,'flag':True,'indices':range(len(dataset)),'allindex':create_index_complex(dataset, attributes),'nb_visited':[0,0]}
+    
+    config={'support':dataset,'flag':True,'indices':set(range(len(dataset))),'allindex':create_index_complex(dataset, attributes),'nb_visited':[0,0,0]}
     config.update(config_init)
     timing+=time()-st
     #st=time()
     if not bfs :
-        enum=enumerator_complex_cbo_new(attributes,0,config,threshold,verbose)
+        enum=enumerator_complex_cbo_new(attributes,0,config,dataset,threshold,verbose)
     else :
         enum=enumerator_complex_cbo_new_bfs([attributes],[0],[config],threshold,0,verbose)
         
