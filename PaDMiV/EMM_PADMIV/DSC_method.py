@@ -1704,6 +1704,7 @@ def dsc_uuc_method_HEATMAP(dataset,attributes,configuration,user1_scope,user2_sc
     
     
     visited_aggregated_outcome={}
+    visited_1_trace_map={}
     visited_1_trace=set()
     visited_2_trace=set()
     visited_aggregated_outcome_has_key=visited_aggregated_outcome.has_key
@@ -1720,7 +1721,10 @@ def dsc_uuc_method_HEATMAP(dataset,attributes,configuration,user1_scope,user2_sc
             continue
         st=time()
 #         users1_aggregated_map_details_array_pattern,users1_aggregated_map_to_users_pattern,users1_aggregated_map_votes_pattern,users1_aggregated_to_votes_outcomes_pattern,users1_all_ids_to_preserve,users1_aggregated_to_preserve,users1_all_ids_visited,users1_aggregated_ids_visited=compute_aggregates_outcomes_opt(all_votes_id,u1_p_set_users,precedent_users1_aggregated_to_preserve, users1_aggregated_map_details,precedent_users1_aggregated_map_to_users, all_users_to_votes_outcomes, users_attributes,outcome_tuple_structure,size_aggregate_min=nb_aggregation_min_user1,users_aggregated_to_votes_outcomes_param=precedent_users1_aggregated_to_votes_outcomes)
-        
+        if not u1_p_tuple_users in visited_1_trace_map:
+            visited_1_trace_map[u1_p_tuple_users]=set()
+            
+            
         if not visited_aggregated_outcome_has_key(u1_p_tuple_users):
             users1_aggregated_map_details_array_pattern,users1_aggregated_map_to_users_pattern,users1_aggregated_map_votes_pattern,users1_aggregated_to_votes_outcomes_pattern,users1_all_ids_to_preserve,users1_aggregated_to_preserve,users1_all_ids_visited,users1_aggregated_ids_visited=compute_aggregates_outcomes(all_votes_id,u1_p_set_users,users1_agg_ids, users1_aggregated_map_details,users1_aggregated_map_to_users, all_users_to_votes_outcomes, users_attributes,outcome_tuple_structure,size_aggregate_min=nb_aggregation_min_user1)
 
@@ -1738,7 +1742,7 @@ def dsc_uuc_method_HEATMAP(dataset,attributes,configuration,user1_scope,user2_sc
             users1_aggregated_to_votes_outcomes_pattern=cur_visited['votes_outcomes']
             users1_all_ids_to_preserve=cur_visited['users_all_ids']
             users1_aggregated_to_preserve=cur_visited['users_agg_ids']
-            
+            #visited_1_trace_map[u1_p_tuple_users]=set()
             visited_1_trace|={u1_p_tuple_users}
             
             
@@ -1780,7 +1784,12 @@ def dsc_uuc_method_HEATMAP(dataset,attributes,configuration,user1_scope,user2_sc
                 continue
             
             st=time()
-
+            
+            if (u2_p_tuple_users in visited_1_trace_map and u1_p_tuple_users in visited_1_trace_map[u2_p_tuple_users]) :#or (u1_p_tuple_users in visited_1_trace and u2_p_tuple_users in visited_2_trace):
+                    continue
+            else :
+                visited_1_trace_map[u1_p_tuple_users]|={u2_p_tuple_users}
+            
             
             if not visited_aggregated_outcome_has_key(u2_p_tuple_users):
 
@@ -1795,17 +1804,17 @@ def dsc_uuc_method_HEATMAP(dataset,attributes,configuration,user1_scope,user2_sc
 
                 
             else :
-                ###########################EERRROOOOOOOOOOOOOR ! #################################
-#                 if (u2_p_tuple_users in visited_1_trace and u1_p_tuple_users in visited_2_trace) or (u1_p_tuple_users in visited_1_trace and u2_p_tuple_users in visited_2_trace):
+                ##########################EERRROOOOOOOOOOOOOR ! #################################
+#                 if (u2_p_tuple_users in visited_1_trace_map and u1_p_tuple_users in visited_1_trace_map[u2_p_tuple_users]) :#or (u1_p_tuple_users in visited_1_trace and u2_p_tuple_users in visited_2_trace):
 #                     continue
-                ###########################EERRROOOOOOOOOOOOOR ! #################################
+                ##########################EERRROOOOOOOOOOOOOR ! #################################
                 cur_visited = visited_aggregated_outcome[u2_p_tuple_users]
                 users2_aggregated_map_votes_pattern=cur_visited['map_to_votes']
                 users2_aggregated_to_votes_outcomes_pattern=cur_visited['votes_outcomes']
                 users2_all_ids_to_preserve=cur_visited['users_all_ids']
                 users2_aggregated_to_preserve=cur_visited['users_agg_ids']
                 visited_2_trace|={u2_p_tuple_users}
-                
+                #visited_1_trace_map[u1_p_tuple_users]|={u2_p_tuple_users}
 
             timing+=time()-st
             ratio_u2_p=len(users2_all_ids_to_preserve)/float(len_users2_all_starting)
